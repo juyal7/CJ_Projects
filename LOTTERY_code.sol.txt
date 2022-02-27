@@ -1,0 +1,61 @@
+// SPDX-License-Identifier: GPL-3.0
+
+pragma solidity >=0.5.0 <0.9.0; //SOLIDITY VERSION
+
+contract Lottery {
+
+    address public manager; //varibale to store manager add
+    address payable[] public participants; // array type variable for storing add. of participants
+
+//initialise the contract 
+
+    constructor()
+    {
+        manager=msg.sender; // global variable,manager address store.
+ 
+    }
+
+//function to recieve ether from participants
+
+    receive() external payable  //only used once 
+    {
+      require(msg.sender != manager); //manager can't participate
+      require(msg.value== 2 ether); //condition to check min. value for contract
+      participants.push(payable(msg.sender));
+    }
+//check balance 
+    function getbalance() public view returns(uint)
+    {
+        require(msg.sender == manager);
+        return address(this).balance;
+    }
+
+//check NO. of participants
+
+    function getNOofParticipants() public view returns(uint)
+    {
+        return participants.length;
+    }
+
+//select address randomly
+    function random() public view returns(uint)
+    {
+       return uint(keccak256(abi.encodePacked(block.difficulty,block.timestamp,participants.length)));
+    }
+//select random winner and transfer all ether
+    function selectwinner() public
+    {
+        require (msg.sender==manager);
+        require(participants.length>=3);
+        uint r=random();
+        address payable winner;
+        uint index = r % participants.length;
+        winner=participants[index];
+        winner.transfer(getbalance());
+        participants=new address payable[](0); //reset array
+        manager=address (0);
+
+    }
+
+
+}
