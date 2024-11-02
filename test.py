@@ -286,15 +286,28 @@ dec1={
 # cart.pop(remove_item)
 # print(cart)
 
-str1="a"
-str2="b"
-str3="c"
-str4=(str1+"_"+str2+"_"+str3)
-print(str4)
+# str1="a"
+# str2="b"
+# str3="c"
+# str4=(str1+"_"+str2+"_"+str3)
+# print(str4)
 
-from termcolor import colored
-import colorama
-colorama.init()
+# from termcolor import colored
+# import colorama
+# colorama.init()
 
-print(colored(str4,'red'))
-print(colored("Welcome to the Demo Marketplace","yellow"))
+# print(colored(str4,'red'))
+# print(colored("Welcome to the Demo Marketplace","yellow"))
+
+
+def outer(func):
+    def inner(a,b):
+        return func(a,b) +1 
+    return inner
+    
+@outer    
+def add(a,b):
+    c=a+b
+    return c
+
+print(add(2,3))
