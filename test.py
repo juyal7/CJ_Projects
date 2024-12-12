@@ -300,14 +300,101 @@ dec1={
 # print(colored("Welcome to the Demo Marketplace","yellow"))
 
 
-def outer(func):
-    def inner(a,b):
-        return func(a,b) +1 
-    return inner
+# def outer(func):
+#     def inner(a,b):
+#         return func(a,b) +1 
+#     return inner
     
-@outer    
-def add(a,b):
-    c=a+b
-    return c
+# @outer    
+# def add(a,b):
+#     c=a+b
+#     return c
 
-print(add(2,3))
+# print(add(2,3))
+
+
+# import pdb ;pdb.set_trace
+# import logging
+# logging.basicConfig(filename='app.log', filemode="w", level=logging.DEBUG,format='%(asctime)s - %(levelname)s - %(message)s')
+# def factorial(n):
+#     if n==0 or n==1:
+#         logging.debug("This is a debug message")
+#         return 1
+#     else:
+#         logging.debug("This is a debug message")
+#         return n*factorial(n-1)
+    
+
+# # import pdb ;pdb.set_trace()
+# a=factorial(-5)
+
+# print(a)
+
+
+# logging.info("This is an info message")
+# logging.warning("This is a warning message")
+# logging.error("This is an error message")
+# logging.critical("This is a critical message")
+
+
+# class car():
+# 	_num_of_wheels=4
+    
+# 	def __init__(self,make,model,year):
+# 		self.make=make
+# 		self.model=model
+# 		self.year=year
+
+# 	def start_engine(self):
+# 		return f"the engine of {self.make},{self.model} starts"
+
+# 	# @staticmethod	
+# 	def car_category(speed):
+# 		if speed>300:
+# 			return "sport"
+# 		elif speed >120:
+# 			return "sedan"
+# 		else:
+# 			return "compact"
+
+# 	@classmethod
+# 	def change_wheel_count(cls,count):
+# 		cls._num_of_wheels=count
+   
+# obj1=car("Toyota", "Camry", 2022)
+# # print(obj1.start_engine())
+# # print(car.car_category(250))
+# obj1.change_wheel_count(6)
+# # print(car._num_of_wheels)
+# print(car._num_of_wheels)
+
+
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Create time points (using more points for smoother curves)
+t = np.linspace(0, 2*np.pi, 1000)
+
+# Create different frequency sine waves
+f1 = np.sin(3*t)       # 1 Hz
+f2 = np.sin(6*t)      # 2 Hz
+f3 = np.sin(9*t)      # 4 Hz
+
+# Create the plot
+plt.figure(figsize=(10, 6))  # Set figure size
+
+# Plot each sine wave with different colors and labels
+plt.plot(t, f1, 'b-', label='1 Hz')
+plt.plot(t, f2, 'r-', label='2 Hz')
+plt.plot(t, f3, 'g-', label='4 Hz')
+
+# Customize the plot
+plt.title('Sine Waves with Different Frequencies')
+plt.xlabel('Time')
+plt.ylabel('Amplitude')
+plt.grid(True)
+plt.legend()
+
+# Display the plot
+plt.show()

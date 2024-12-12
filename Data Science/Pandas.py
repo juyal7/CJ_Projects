@@ -1,8 +1,13 @@
 import pandas as pd
 import numpy as np
-
-data=pd.read_excel("C:/Users/Chanchal Juyal/Desktop\My Work/Ipl_data.xlsx")
-# print(data)
+import os
+file_path="C:/Users/Chanchal Juyal/Desktop/My Work/ipl_data.xlsx"
+data=pd.read_excel(file_path)
+print(data)
+# if os.path.exists(file_path):
+#        print("yes")
+# else:
+#        print("no")       
 # print(type(data))
 # print(data.head(5))
 # print(data.info())
@@ -69,7 +74,7 @@ import matplotlib.pyplot as plt
 
 """Operations on Series"""
 
-my_series=data["winner"].value_counts()
+# my_series=data["winner"].value_counts()
 # a=my_series.index
 # b=my_series.values
 # c=my_series.shape
@@ -86,7 +91,26 @@ my_series=data["winner"].value_counts()
 # print(data)
 
 """Remove"""
-data.drop_duplicates(subset=['city']).shape
-print(data)
+# data.drop_duplicates(subset=['city']).shape
+# print(data)
 
+# print(data.head(5))
+# dummy_variable=pd.get_dummies(data,columns=['city'],dtype=int)
+# print(data.head(5))
+# print(dummy_variable)
 
+# from sklearn.preprocessing import LabelEncoder
+# le=LabelEncoder()
+# data['city']=le.fit_transform(data['city'])
+# print((le))
+# data1={"Name":['a','b','c']
+#        ,"Year":[2018,2019,2015]
+#        }
+
+# df_age=pd.DataFrame(data1)
+# print(df_age)
+# import datetime as date
+# current_year=2024
+# df_age[current_year]=2024
+# df_age['Age']=current_year-df_age['Year']
+# print(df_age)
