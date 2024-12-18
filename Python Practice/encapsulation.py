@@ -53,5 +53,5 @@ def greet(person):
 
 p=Person('x', 'y')
 x=greet(p)
-print(x.name, x.gender)
+print(x.name, x.gender)               
     

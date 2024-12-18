@@ -370,31 +370,49 @@ dec1={
 
 
 
-import numpy as np
-import matplotlib.pyplot as plt
+# import numpy as np
+# import matplotlib.pyplot as plt
 
-# Create time points (using more points for smoother curves)
-t = np.linspace(0, 2*np.pi, 1000)
+# # Create time points (using more points for smoother curves)
+# t = np.linspace(0, 2*np.pi, 1000)
 
-# Create different frequency sine waves
-f1 = np.sin(3*t)       # 1 Hz
-f2 = np.sin(6*t)      # 2 Hz
-f3 = np.sin(9*t)      # 4 Hz
+# # Create different frequency sine waves
+# f1 = np.sin(3*t)       # 1 Hz
+# f2 = np.sin(6*t)      # 2 Hz
+# f3 = np.sin(9*t)      # 4 Hz
 
-# Create the plot
-plt.figure(figsize=(10, 6))  # Set figure size
+# # Create the plot
+# plt.figure(figsize=(10, 6))  # Set figure size
 
-# Plot each sine wave with different colors and labels
-plt.plot(t, f1, 'b-', label='1 Hz')
-plt.plot(t, f2, 'r-', label='2 Hz')
-plt.plot(t, f3, 'g-', label='4 Hz')
+# # Plot each sine wave with different colors and labels
+# plt.plot(t, f1, 'b-', label='1 Hz')
+# plt.plot(t, f2, 'r-', label='2 Hz')
+# plt.plot(t, f3, 'g-', label='4 Hz')
 
-# Customize the plot
-plt.title('Sine Waves with Different Frequencies')
-plt.xlabel('Time')
-plt.ylabel('Amplitude')
-plt.grid(True)
-plt.legend()
+# # Customize the plot
+# plt.title('Sine Waves with Different Frequencies')
+# plt.xlabel('Time')
+# plt.ylabel('Amplitude')
+# plt.grid(True)
+# plt.legend()
 
-# Display the plot
-plt.show()
+# # Display the plot
+# plt.show()
+
+
+class xyz():
+    def __init__(self, a, b):
+        self.a=a
+        self.b=b
+    def __iter__(self):
+        return self
+    def __next__(self):
+        if self.a>self.b:
+            raise StopIteration
+        current=self.a
+        if current%2==0:
+            self.a+=2
+            return current
+        else:
+            self.a+=1
+            return current

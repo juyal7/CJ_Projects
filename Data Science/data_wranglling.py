@@ -32,10 +32,16 @@ if 'price' in data.columns:
     
 import matplotlib.pyplot as plt
 import seaborn as sns
-sns.histplot(data['price'], kde=True)
-plt.show()
+# sns.histplot(data['price'], kde=True)
+# plt.show()
 sns.histplot(data['Log_price'], kde=True)
 plt.show()
 
 """data normalization"""
 # from sklearn.preprocessing import MinMaxScaler
+
+
+"""Handling outliers"""
+winsorization=data['price'].quantile(0.99)
+
+result=pd.merge(data[data['price']<winsorization], data[data['price']>winsorization], how='outer')

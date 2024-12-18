@@ -88,12 +88,15 @@ import pandas as pd
 # df =pd.read_csv("C:/Users/Chanchal Juyal/Desktop/My Work/Learning Docs/AIML/Classes/Lesson_05_Data_Visualization/Dataset/ADANIPORTS.csv")
 # print(df.head(5))
 
-x=np.linspace(0, 10, 100)
-y=np.linspace(0, 20, 100)
+# x=np.linspace(0, 10, 100)
+# y=np.linspace(0, 20, 100)
 
-xx,yy=np.meshgrid(x, y)
-z=np.sin(xx)+np.cos(yy)
-fig=plt.figure()
-ax=fig.add_subplot(111, projection='3d')
-ax.plot_surface(xx, yy, z, cmap="viridis")
-plt.show()
+# xx,yy=np.meshgrid(x, y)
+# z=np.sin(xx)+np.cos(yy)
+# fig=plt.figure()
+# ax=fig.add_subplot(111, projection='3d')
+# ax.plot_surface(xx, yy, z, cmap="viridis")
+# plt.show()
+
+sns.regplot(x="win_by_runs", y="win_by_wickets", data=data)
+

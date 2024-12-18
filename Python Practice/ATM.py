@@ -10,7 +10,7 @@ class Atm:
         1. Enter 1 to create pin:-
         2. Enter 2 to change pin:-
         3. Enter 3 to check balance:-
-        4. Enter 4 to check withdraw:-
+        4. Enter 4 to withdraw:-
         5. Enter 5 to exit
         """)
         if user_input=="1":
@@ -59,6 +59,7 @@ class Atm:
             if amount<=self.balance:
                 self.balance=self.balance-amount
                 print("Withdrawal successful")
+                print("Your remaining balance is:-", self.balance)
                 self.menu()
             else:
                 print("Insufficient balance")
@@ -69,7 +70,5 @@ class Atm:
     
     def exit(self):
         pass
-
-           
+      
 obj=Atm()
-print(type(obj.pin))

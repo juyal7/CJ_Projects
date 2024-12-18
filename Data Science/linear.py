@@ -25,4 +25,6 @@ import numpy as np
 a1=np.arange(1,10).reshape(3,3)
 b1=np.arange(21, 30).reshape(3, 3)
 c1=np.dot(a1, a1)
+
 print(c1)
+ 

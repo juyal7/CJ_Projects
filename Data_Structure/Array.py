@@ -104,8 +104,3 @@ L.append(2)
 L.append(3)
 L.append(4)
 print
-
-
-#####
-########
-###
