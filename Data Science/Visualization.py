@@ -98,5 +98,5 @@ import pandas as pd
 # ax.plot_surface(xx, yy, z, cmap="viridis")
 # plt.show()
 
-sns.regplot(x="win_by_runs", y="win_by_wickets", data=data)
+# sns.regplot(x="win_by_runs", y="win_by_wickets", data=data)
 

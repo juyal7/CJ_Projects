@@ -7,6 +7,7 @@ from scipy import stats
 data = pd.read_csv("C:/Users/Chanchal Juyal/Desktop/My Work/Learning Docs/AIML/Classes/Project2/AusApparalSales4thQrt2020.csv")
 # print(data.tail(10))
 
+#This class handles data cleaning and preparation.
 class data_wranglling():
     def __init__(self,data):
         self.data=data
@@ -37,6 +38,7 @@ class data_wranglling():
         print(data.groupby('Group')['Sales'].var())
         print(data.groupby('Group')['Sales'].describe())        
 
+#This Class gives statistical_analysis
 class data_analysis():
     """Perform descriptive statistical analysis on the data in the 
     Sales and Unit columns. Utilize
@@ -81,7 +83,8 @@ class data_analysis():
         data['Date']=pd.to_datetime(data['Date'])
         data['Quarter']=data['Date'].dt.quarter
         return data.groupby('Quarter')['Sales'].sum()
-        
+
+#This Class Gives data visualization        
 class data_visualization():
     """State-wise sales analysis for different demographic groups (kids, women, men, and seniors)"""
     
@@ -249,6 +252,7 @@ class data_visualization():
         plt.tight_layout()
         plt.show()
 
+#This class create a Dashboard
 class My_Dashboard():
     def create_sales_dashboard(self, data):
         """
@@ -316,19 +320,18 @@ class My_Dashboard():
         fig.suptitle(f'Sales Dashboard\nTotal Sales: ${total_sales:,.2f}\n'
                     f'Average Daily Sales: ${avg_daily_sales:,.2f}',
                     fontsize=14, y=1.05)
-        plt.tight_layout()
+        # plt.tight_layout()
         plt.show()       
 
-class analysis_report():
-    def __init__(self, data):
+#This Class will give Outliers 
+class Outliers():
+    def analyze_outliers(self,data):
         self.data = data
-    
-    def analyze_outliers(self):
         """
         Create comprehensive box plot analysis for sales outliers
         """
         # Create figure with subplots
-        fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 12))
+        fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 10))
         
         # Box plot by Group
         sns.boxplot(x='Group', y='Sales', data=self.data, ax=ax1)
@@ -339,26 +342,22 @@ class analysis_report():
         
         # Add outlier statistics for each group
         outlier_stats = self.get_outlier_stats()
-        ax1.text(1.02, 0.5, outlier_stats, 
-                transform=ax1.transAxes,
+        ax1.text(1.02, 0.6, outlier_stats, transform=ax1.transAxes,
                 bbox=dict(facecolor='white', alpha=0.8, edgecolor='gray'),
                 fontsize=9,
                 verticalalignment='center')
         
         # Monthly box plot
         self.data['Month'] = pd.to_datetime(self.data['Date']).dt.strftime('%B')
-        month_order = ['January', 'February', 'March', 'April', 'May', 'June', 
-                      'July', 'August', 'September', 'October', 'November', 'December']
-        sns.boxplot(x='Month', y='Sales', data=self.data, ax=ax2, 
-                   order=[m for m in month_order if m in self.data['Month'].unique()])
+        sns.boxplot(x='Month', y='Sales', data=self.data, ax=ax2) 
         ax2.set_title('Sales Distribution by Month', fontsize=8, pad=10)
         ax2.set_xlabel('Month', fontsize=5)
         ax2.set_ylabel('Sales ($)', fontsize=5)
         ax2.tick_params(axis='x')
         
         # Add grid for better readability
-        ax1.grid(True, alpha=0.3)
-        ax2.grid(True, alpha=0.3)
+        ax1.grid(True, alpha=1)
+        ax2.grid(True, alpha=1)
         
         plt.tight_layout()
         plt.show()
@@ -371,6 +370,7 @@ class analysis_report():
         stats = []
         for group in self.data['Group'].unique():
             group_data = self.data[self.data['Group'] == group]['Sales']
+            # print(group_data)
             Q1 = group_data.quantile(0.25)
             Q3 = group_data.quantile(0.75)
             IQR = Q3 - Q1
@@ -413,16 +413,99 @@ class analysis_report():
                 print(f"Outlier range: ${outliers.min():,.2f} to ${outliers.max():,.2f}")    
     
 def main():
-    # obj1=My_Dashboard()
-    # t1=obj1.create_sales_dashboard(data)
-    # obj2=data_visualization()
-    # t2=obj2.state_wise_sales(data)
-    # t3=obj2.product_wise_sales(data)
-    # t4=obj2.unit_wise(data)
-    obj3=analysis_report(data)
-    t5=obj3.get_extreme_outliers()
+    def analyze_sales_data():
+        try:
+            # Create instances of the analysis classes
+            data_analysis_obj = data_analysis()
+            data_viz_obj = data_visualization()
+            dash_Board_obj=My_Dashboard()
+            outlier_obj=Outliers()
+            
+            
+            # Function to display menu and get user choice
+            def display_menu():
+                print("\n=== Sales Analysis Dashboard ===")
+                print("1. View Statistical Analysis")
+                print("2. View Sales by Group")
+                print("3. View State-wise Sales")
+                print("4. View Time of Day Analysis")
+                print("5. View Unit-wise Analysis")
+                print("6. View All Reports")
+                print("7. View analysis_report")
+                print("8. View analysis_report")
+                print("0. Exit")
+                return input("\nEnter your choice (0-8): ")
+
+            while True:
+                choice = display_menu()
+                
+                if choice == '1':
+                    print("\n=== Statistical Analysis ===")
+                    print("\nSales Statistics:")
+                    print(data_analysis_obj.statistical_analysis_sales(data))
+                    print("\nUnit Statistics:")
+                    print(data_analysis_obj.statistical_analysis_unit(data))
+                    
+                    print("\nHighest Sales Group:")
+                    print(data_analysis_obj.highest_sales(data))
+                    print("\nLowest Sales Group:")
+                    print(data_analysis_obj.lowest_sales(data))
+
+                elif choice == '2':
+                    print("\n=== Sales by Product Group ===")
+                    data_viz_obj.product_wise_sales(data)
+
+                elif choice == '3':
+                    print("\n=== State-wise Sales Analysis ===")
+                    data_viz_obj.state_wise_sales(data)
+
+                elif choice == '4':
+                    print("\n=== Time of Day Analysis ===")
+                    data_viz_obj.visualize_Time_of_the_day(data)
+
+                elif choice == '5':
+                    print("\n=== Unit-wise Analysis ===")
+                    data_viz_obj.unit_wise(data)
+
+                elif choice == '6':
+                    print("\n=== Generating All Reports ===")
+                    print("\nWeekly Report:")
+                    print(data_analysis_obj.weekly__report(data))
+                    print("\nMonthly Report:")
+                    print(data_analysis_obj.Monthly_report(data))
+                    print("\nQuarterly Report:")
+                    print(data_analysis_obj.quarterly_report(data))
+                    
+                    # Generate all visualizations
+                    data_viz_obj.state_wise_sales(data)
+                    data_viz_obj.product_wise_sales(data)
+                    data_viz_obj.unit_wise(data)
+                    data_viz_obj.visualization(data)
+                    data_viz_obj.visualize_Time_of_the_day(data)
+                
+                elif choice == '7':
+                    print("\n=== Dashboard ===")
+                    dash_Board_obj.create_sales_dashboard(data)
+                
+                elif choice == '8':
+                    print("\n=== Dashboard ===")
+                    outlier_obj.analyze_outliers(data)
+                
+                elif choice == '0':
+                    print("\nExiting the program!!!!")
+                    break
+
+                else:
+                    print("\nInvalid choice! Please try again.")
+
+                input("\nPress Enter to continue...")
+
+        except Exception as e:
+            print(f"An error occurred: {str(e)}")
     
-    
-#calling main function
+    #calling Function
+    analyze_sales_data()
+
+# Call the function to start the analysis
 if __name__ == "__main__":
-     main()
+    main()

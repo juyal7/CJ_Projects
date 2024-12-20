@@ -11,7 +11,7 @@ Customization Options :
     ax1.set_title('Daily Sales Trend')
     ax1.set_xlabel('Date', labelpad=1)
     ax1.set_ylabel('Sales (*$10^6)')
-    ax1.tick_params(axis='x', rotation=45, labelsize=5)
+    
 
 Detailed control over every plot element
 Fine-tuning of labels, titles, and axes
