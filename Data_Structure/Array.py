@@ -1,10 +1,11 @@
 import ctypes
 
-class my_class:
+class customized_list:
     def __init__(self):
         self.size=1
         self.n=0
         self.A=self.__make_array(self.size)
+    
     """Array"""
         
     def __make_array(self,size):
@@ -28,6 +29,8 @@ class my_class:
         for i in range(self.n):
             B[i]=self.A[i]
         self.A=B
+    
+    
     """Print"""
     def __str__(self):
         result=""
@@ -35,6 +38,7 @@ class my_class:
             result+=str(self.A[i])+","
         return "["+result[:-1]+"]"
 
+    
     """Get item"""
     def __getitem__(self, index):
         if 0<=index<self.n:
@@ -42,6 +46,7 @@ class my_class:
         else:
             return "IndexError - Index out of range"
 
+    
     """Set item"""
     def __setitem__(self, index, value):
         if 0<=index<self.n:
@@ -49,6 +54,7 @@ class my_class:
         else:
             return "IndexError - Index out of range"
 
+    
     """Delete item"""
     def __delitem__(self, index):
         if 0<=index<self.n:
@@ -60,11 +66,13 @@ class my_class:
         if self.n==self.size//4:
             self.__resize(self.size//2)
             return "Resized"
+    
     """Clear"""
     def clear(self):
         self.n=0
         self.size=1
         return "Cleared"""
+    
     
     """Find"""
     def find(self, element):
@@ -73,6 +81,7 @@ class my_class:
                 return i
         return "Element not found"""
 
+    
     """Insert"""
     def insert(self, index, element):
         if 0<=index<self.n:
@@ -84,6 +93,7 @@ class my_class:
             self.n+=1
         else:
             return "IndexError - Index out of range"    
+    
     """Remove"""
     def remove(self, element):
         index=self.find(element)
@@ -91,6 +101,8 @@ class my_class:
             self.__delitem__(index)
         else:
             return index
+    
+    
     """Pop"""
     def pop(self, index=-1):
         if 0<=index<self.n:
@@ -98,9 +110,22 @@ class my_class:
             self.__delitem__(index)
             return element
 
-L=my_class()
+L=customized_list()
 L.append(1)
 L.append(2)
 L.append(3)
 L.append(4)
-print
+print(L)
+L.remove(3)
+print(L)
+L.pop()
+print(L)
+L.pop(0)
+print(L)
+L.insert(0, 1)
+print(L)
+L.insert(1, 2)
+L.insert(2, 3)
+L.insert(3, 4)
+print(L)
+

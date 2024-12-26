@@ -400,19 +400,35 @@ dec1={
 # plt.show()
 
 
-class xyz():
-    def __init__(self, a, b):
-        self.a=a
-        self.b=b
-    def __iter__(self):
-        return self
-    def __next__(self):
-        if self.a>self.b:
-            raise StopIteration
-        current=self.a
-        if current%2==0:
-            self.a+=2
-            return current
-        else:
-            self.a+=1
-            return current
+# class xyz():
+#     def __init__(self, a, b):
+#         self.a=a
+#         self.b=b
+#     def __iter__(self):
+#         return self
+#     def __next__(self):
+#         if self.a>self.b:
+#             raise StopIteration
+#         current=self.a
+#         if current%2==0:
+#             self.a+=2
+#             return current
+#         else:
+#             self.a+=1
+#             return current
+
+
+list1=[51,6,7,8,91]
+
+list1[0],list1[1]=list1[1],list1[0]
+# list1.sort()
+
+print(list1)
+
+# def __sort__(self):
+#     for i in range(len(list1)-1):
+#         for j in range(len(list1)-1):
+#             if list1[j]>list1[j+1]:
+#                 list1[j], list1[j+1]=list1[j+1], list1[j]
+#                 print(list1)
+            
