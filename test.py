@@ -423,7 +423,7 @@ list1=[51,6,7,8,91]
 list1[0],list1[1]=list1[1],list1[0]
 # list1.sort()
 
-print(list1)
+# print(list1)
 
 # def __sort__(self):
 #     for i in range(len(list1)-1):
@@ -431,4 +431,37 @@ print(list1)
 #             if list1[j]>list1[j+1]:
 #                 list1[j], list1[j+1]=list1[j+1], list1[j]
 #                 print(list1)
-            
+# class mylist():
+#     def __min__(self):
+#         min=list1[0]
+#         for i in range(len(list1)):
+#             if list1[i]<min:
+#                 min=list1[i]
+#         return min
+
+#     def __max__(self):
+#         max=list1[0]
+#         for i in range(len(list1)):
+#             if list1[i]>max:
+#                 max=list1[i]
+#         return max
+
+list1=[51,6,7,8,91,51,5,7,7]
+def duplicate_check(list3):
+    list2=[]
+    for i in list1:
+        if i not in list2:
+            list2.append(i)
+            return True
+        else:
+            return False
+        
+# duplicate_check(list1)
+list2=[1,2,3,4,5,5,6,3,3]
+def add_2_list(list1,list2):
+    list3=[]
+    for i in range(len(list1)):
+        list3.append(list1[i]+list2[i])
+    return list3
+a=add_2_list(list1,list2)
+print(a)
