@@ -5,23 +5,43 @@ import matplotlib.pyplot as plt
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 
 df=pd.read_csv("https://raw.githubusercontent.com/datasciencedojo/datasets/master/titanic.csv")
-# print(df.describe())
-(df['Age'].median())
-df["Age"] = df['Age'].fillna(df["Age"].mean())
-df['Embarked'] = df['Embarked'].fillna(df['Embarked'].mode()[0])
-df.dropna(subset=['Survived'], inplace=True)
-df=df.drop(columns=['Cabin'])
-# df=df.drop(columns=['Embarked'])
-df=df.drop(columns=['Name'])
-df=df.drop(columns=['Ticket'])
-df=df.drop(columns=['PassengerId'])
-# print(df.info())
-label_encoder = LabelEncoder()
-df['Sex'] = label_encoder.fit_transform(df['Sex'])
-df['Embarked'] = label_encoder.fit_transform(df['Embarked'])
-# print(df.head(5))
 
+x=df.drop('Survived',axis=1)
+y=df['Survived']
+from sklearn.model_selection import train_test_split
+X_train,X_test,y_train,y_test=train_test_split(x,y,test_size=0.2,random_state=42)
 
+X_train=X_train.drop(columns=['Name'])
+X_train=X_train.drop(columns=['Ticket'])
+X_train=X_train.drop(columns=['PassengerId'])
+X_train=X_train.drop(columns=['Cabin'])
+
+# print(y_train.info())
+# print(y_test.info())
+
+print(X_train.head())
+X_test=X_test.drop(columns=['Name'])
+X_test=X_test.drop(columns=['Ticket'])
+X_test=X_test.drop(columns=['PassengerId'])
+X_test=X_test.drop(columns=['Cabin'])
+
+print(X_test.head())
+print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+(X_train['Age'].median())
+X_train["Age"] = X_train['Age'].fillna(X_train["Age"].mean())
+X_train['Embarked'] = X_train['Embarked'].fillna(df['Embarked'].mode()[0])
+
+label_encoder=LabelEncoder()
+X_train['Sex'] = label_encoder.fit_transform(X_train['Sex'])
+X_train['Embarked'] = label_encoder.fit_transform(X_train['Embarked'])
+
+(X_test['Age'].median())
+X_test["Age"] = X_test['Age'].fillna(X_test["Age"].mean())
+X_test['Embarked'] = X_test['Embarked'].fillna(df['Embarked'].mode()[0])
+
+label_encoder=LabelEncoder()
+X_test['Sex'] = label_encoder.fit_transform(X_test['Sex'])
+X_test['Embarked'] = label_encoder.fit_transform(X_test['Embarked'])
 
 def clip_outlier(df,col):
     Q1=df[col].quantile(0.25)
@@ -32,34 +52,28 @@ def clip_outlier(df,col):
     df[col]=np.clip(df[col],lower_bound,upper_bound)
     return df
 for col in ['Age','Fare']:
-    clip_outlier(df,col)
+    clip_outlier(X_train,col)
+    
+for col in ['Age','Fare']:
+    clip_outlier(X_test,col)
+    
 
-# sns.boxplot(y = df["Age"])
-# plt.show()
-# sns.boxplot(y=df['Fare'])
-# plt.show()
-
-# print(df.info())
-
-x=df.drop('Survived',axis=1)
-y=df['Survived']
 
 from sklearn.model_selection import train_test_split
-X_train,X_test,y_train,y_test=train_test_split(x,y,test_size=0.2,random_state=42)
+# X_train,X_test,y_train,y_test=train_test_split(x,y,test_size=0.2,random_state=42)
 
-# print(f"Training X data \n {X_train}")
-# print(f"Training Y data {y_train}")
-# print(f"Testing X data {X_test}")
-# print(f"Testing Y data {y_test}")
-
+print(X_train.head())
+print("============================================================================")   
+# print(X_train.info())
+# print(X_test.info())
 
 scaler = StandardScaler()
 scaler = StandardScaler()
 numerical_features = ['Age', 'Fare', 'SibSp', 'Parch']
 X_train[numerical_features] = scaler.fit_transform(X_train[numerical_features])
-X_test[numerical_features] = scaler.transform(X_test[numerical_features])
+X_test[numerical_features] = scaler.fit_transform(X_test[numerical_features])
 
-# print(X_train.head())
+print(X_train.head())
 
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix, roc_auc_score, roc_curve
@@ -97,29 +111,3 @@ accuracy = accuracy_score(y_test, y_pred)
 print(f'Accuracy: {accuracy * 100:.2f}%')
 
 
-
-# sns.pairplot(df,x_vars=['Pclass','Age','SibSp','Parch'],y_vars='Survived',kind='reg')
-# plt.show()
-
-""""Confusion matrix"""
-
-# Print confusion matrix
-from sklearn.metrics import classification_report, confusion_matrix, roc_curve, auc
-from sklearn.metrics import ConfusionMatrixDisplay
-
-conf_matrix = confusion_matrix(y_test, y_pred)
-print("Confusion Matrix:")
-print(conf_matrix)
-
-# Heatmap visualization for confusion matrix
-cm_display = ConfusionMatrixDisplay(confusion_matrix = conf_matrix, display_labels = ["Servived", "N Servived"])
-
-# display matrix
-cm_display.plot()
-plt.show()
-
-
-# Print classification report
-print("\t\tLogistic Regression Classification Report:")
-print("\t\t-----------------------------------------")
-print(classification_report(y_test, y_pred))
