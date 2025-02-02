@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
-from sklearn.preprocessing import LabelEncoder, StandardScaler
+from sklearn.preprocessing import LabelEncoder, StandardScaler, Normalizer
 
 df=pd.read_csv("https://raw.githubusercontent.com/datasciencedojo/datasets/master/titanic.csv")
 # print(df.describe())
@@ -62,65 +62,38 @@ X_test[numerical_features] = scaler.transform(X_test[numerical_features])
 # print(X_train.head())
 
 from sklearn.linear_model import LogisticRegression
+from sklearn.pipeline import Pipeline
+from sklearn.naive_bayes import GaussianNB
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix, roc_auc_score, roc_curve
 from sklearn.model_selection import  GridSearchCV
-lr=LogisticRegression(class_weight={0: 0.1, 1: 0.8})
+lr=GaussianNB()
 
-# Defining the parameters for GridSearchCV
-param_grid = {
-    'penalty': ['l1', 'l2', 'elasticnet', None],
-    'max_iter': [100, 500, 1000]
-}
+# Import Required Libraries and apply Naive Bayes algorithm
+from sklearn.naive_bayes import GaussianNB
+# Define the pipeline
+pipeline = Pipeline([
+    (  'normqlizer',Normalizer()),  
+        ('scaler', StandardScaler()),
+    ('nb', GaussianNB())
+])
 
-# Applying GridSearchCV for hyperparameter tuning
-grid_search = GridSearchCV(estimator=lr, param_grid=param_grid, cv=5, scoring='accuracy', return_train_score=True)
-grid_search.fit(X_train, y_train)
+# Fit the pipeline on the training data
+pipeline.fit(X_train, y_train)
 
-# Getting the best estimator
-best_lr = grid_search.best_estimator_
 
-# Making predictions
-y_pred = best_lr.predict(X_test)
-y_pred_proba = best_lr.predict_proba(X_test)[:, 1]
+#Predict on the training and testing set
+y_pred_train_nb = pipeline.predict(X_train)
+y_pred_test_nb = pipeline.predict(X_test)
 
-results_df = pd.DataFrame({
-    'Actual Label': y_test,
-    'Predicted Probability': y_pred_proba,
-    'Predicted Label': y_pred
-})
+# Calculate the training and testing accuracy
+training_accuracy = accuracy_score(y_train, y_pred_train_nb)
+testing_accuracy = accuracy_score(y_test, y_pred_test_nb)
+print("\nNaïve Bayes:")
+print(f"Training Accuracy: {training_accuracy}")
+print(f"Testing Accuracy: {testing_accuracy}")
 
-# Display the first 5 instances in the result dataframe
-print(results_df.head())
-
-# Calculating accuracy
-accuracy = accuracy_score(y_test, y_pred)
-print(f'Accuracy: {accuracy * 100:.2f}%')
+y_pred_prob_nb = pipeline.predict_proba(X_test)[:, 1]
 
 
 
-# sns.pairplot(df,x_vars=['Pclass','Age','SibSp','Parch'],y_vars='Survived',kind='reg')
-# plt.show()
-
-""""Confusion matrix"""
-
-# Print confusion matrix
-from sklearn.metrics import classification_report, confusion_matrix, roc_curve, auc
-from sklearn.metrics import ConfusionMatrixDisplay
-
-conf_matrix = confusion_matrix(y_test, y_pred)
-print("Confusion Matrix:")
-print(conf_matrix)
-
-# Heatmap visualization for confusion matrix
-cm_display = ConfusionMatrixDisplay(confusion_matrix = conf_matrix, display_labels = ["Servived", "N Servived"])
-
-# display matrix
-cm_display.plot()
-plt.show()
-
-
-# Print classification report
-print("\t\tLogistic Regression Classification Report:")
-print("\t\t-----------------------------------------")
-print(classification_report(y_test, y_pred))
 

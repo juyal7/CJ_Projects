@@ -5,9 +5,8 @@ import matplotlib.pyplot as plt
 
 """Data Collection"""
 
-df1=pd.read_csv("C:/Users/Chanchal Juyal/Desktop/My Work/Learning Docs/AIML/Classes/ML/ML_Steps/Advertising.csv")
-df=pd.read_csv("https://raw.githubusercontent.com/datasciencedojo/datasets/master/titanic.csv")
-print(df.head(10))
+df=pd.read_csv("C:/Users/Chanchal Juyal/Desktop/My Work/Learning Docs/AIML/Classes/ML/ML_Steps/Advertising.csv")
+
 
 """Data Processing"""
 
@@ -60,7 +59,7 @@ plt.show()
 """pairplot"""
 
 x=df.drop('sales',axis=1)
-y=df['sales']
+y=df['sales'] 
 
 sns.pairplot(df,x_vars=['TV','radio','newspaper'],y_vars='sales',kind='reg')
 plt.show()
