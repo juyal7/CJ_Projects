@@ -13,8 +13,8 @@ class customized_list:
     
     """Length"""
     def __len__(self):
-        return self.n
-    
+        return self.n      
+
     """Append"""
     def append(self, element):
         if self.n==self.size:
@@ -104,11 +104,18 @@ class customized_list:
     
     
     """Pop"""
-    def pop(self, index=-1):
-        if 0<=index<self.n:
-            element=self.A[index]
-            self.__delitem__(index)
-            return element
+    # def pop(self, index=-1):
+    #     if 0<=index<self.n:
+    #         element=self.A[index]
+    #         self.__delitem__(index)
+    #         return element
+        
+    """pop Another way"""
+    def pop(self):
+        if self.n==0:
+            return 'Empty list'
+        print(self.A[self.n-1])
+        self.n=self.n-1
 
 L=customized_list()
 L.append(1)
@@ -120,12 +127,11 @@ L.remove(3)
 print(L)
 L.pop()
 print(L)
-L.pop(0)
+L.pop()
 print(L)
 L.insert(0, 1)
 print(L)
 L.insert(1, 2)
 L.insert(2, 3)
 L.insert(3, 4)
-print(L)
-
+print(L)   
