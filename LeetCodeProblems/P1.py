@@ -20,7 +20,9 @@ class Solution:
         for i, x in enumerate(nums):  # Loop through the list
             if (y := target - x) in d:  # Check if the complement exists in the dictionary
                 result.append([d[y], i])  # If found, return the stored index and the current index
-            # d[x] = i  # Store the current number with its index
+                print(result)
+            d[x] = i  # Store the current number with its index
+            # print(d)
         return result
 
 obj=Solution()

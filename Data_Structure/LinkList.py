@@ -84,9 +84,9 @@ class LinkedList:
             curr=curr.next
         curr.next=None
         self.n=self.n-1
-
+          
     """Remove"""
-    def delete_middle(self, value):
+    def remove(self, value):
         if self.head==None:
             return 'Empty LinkedList'
         
@@ -105,10 +105,38 @@ class LinkedList:
         self.head=None
         self.n=0
 
+    def search(self,value):
+        curr=self.head
+        pos=0
+        
+        while curr!=None:
+            if curr.data==value:
+                return pos
+            curr=curr.next
+            pos=pos+1
+            
+        return "Item not found"
+                
+    def reverse(self):
+        prev_node=None
+        curr_node=self.head
+        
+        while curr_node!=None:
+            next_node=curr_node.next
+            curr_node.next=prev_node
+            prev_node=curr_node
+            curr_node=next_node
+        
+        self.head=prev_node
+            
+        
 
-    
 L=LinkedList()
 print(len(L))
-L.insert_head(100)
-L.insert_after(100,0)
+L.insert_head(1)
+L.insert_after(1,2)
+L.insert_tail(3)
+L.insert_tail(4)
+L.insert_tail(5)
+L.reverse()
 print(L)
