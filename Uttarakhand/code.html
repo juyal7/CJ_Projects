@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uttarakhand Information Portal</title>
+    <style>
+        :root {
+            --primary-color: #2c5e1a;
+            --secondary-color: #f0f7da;
+            --accent-color: #638c54;
+            --text-color: #333;
+            --light-text: #fff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/api/placeholder/1200/600') center/cover no-repeat;
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+        }
+        
+        nav {
+            background-color: var(--primary-color);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+        
+        nav ul li {
+            margin: 0 15px;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        section {
+            margin: 50px 0;
+        }
+        
+        h1, h2, h3 {
+            color: var(--primary-color);
+        }
+        
+        .hero-title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: white;
+        }
+        
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .card-content {
+            padding: 20px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: var(--accent-color);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2rem;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 3px;
+            background-color: var(--primary-color);
+            margin: 10px auto;
+        }
+        
+        .feature-box {
+            padding: 30px;
+            border-radius: 8px;
+            background-color: var(--secondary-color);
+            margin-bottom: 20px;
+        }
+        
+        form {
+            background-color: var(--secondary-color);
+            padding: 30px;
+            border-radius: 8px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+        }
+        
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .dashboard-card {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .profile-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        
+        .profile-card {
+            flex: 1;
+            min-width: 300px;
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .profile-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        
+        .profile-content {
+            padding: 20px;
+        }
+        
+        .tab-container {
+            margin-top: 20px;
+        }
+        
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #f5f5f5;
+            border: none;
+            border-radius: 5px 5px 0 0;
+            margin-right: 5px;
+        }
+        
+        .tab.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .tab-content {
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-top: none;
+        }
+        
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav ul li {
+                margin: 10px 0;
+            }
+            
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="hero-title">Discover Uttarakhand</h1>
+        <p class="hero-subtitle">Land of Gods and Natural Beauty</p>
+        <a href="#explore" class="btn">Explore Now</a>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#destinations">Destinations</a></li>
+            <li><a href="#culture">Culture</a></li>
+            <li><a href="#community">Community</a></li>
+            <li><a href="#diaspora">Diaspora</a></li>
+            <li><a href="#ai-features">AI Features</a></li>
+            <li><a href="#employment">Jobs & Education</a></li>
+            <li><a href="#contribute">Contribute</a></li>
+        </ul>
+    </nav>
+    
+    <div class="container">
+        <section id="about">
+            <h2 class="section-title">About Uttarakhand</h2>
+            <div class="card-container">
+                <div class="card">
+                    <img src="/api/placeholder/400/300" alt="Uttarakhand Landscape">
+                    <div class="card-content">
+                        <h3>Geography</h3>
+                        <p>Uttarakhand, located in the northern part of India, is known for its Himalayan ranges, glaciers, rivers, and dense forests.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="/api/placeholder/400/300" alt="Uttarakhand History">
+                    <div class="card-content">
+                        <h3>History</h3>
+                        <p>Formerly part of Uttar Pradesh, Uttarakhand became the 27th state of India on November 9, 2000. It has a rich cultural heritage dating back centuries.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="/api/placeholder/400/300" alt="Uttarakhand Demographics">
+                    <div class="card-content">
+                        <h3>Demographics</h3>
+                        <p>Home to approximately 10 million residents with diverse ethnic backgrounds, languages, and traditions.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="destinations">
+            <h2 class="section-title">Popular Destinations</h2>
+            <div class="card-container">
+                <div class="card">
+                    <img src="/api/placeholder/400/300" alt="Rishikesh">
+                    <div class="card-content">
+                        <h3>Rishikesh</h3>
+                        <p>Adventure capital and yoga hub, situated on the banks of the holy Ganges River.</p>
+                        <a href="#" class="btn">Learn More</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="/api/placeholder/400/300" alt="Nainital">
+                    <div class="card-content">
+                        <h3>Nainital</h3>
+                        <p>Beautiful hill station centered around the Naini Lake, surrounded by mountains.</p>
+                        <a href="#" class="btn">Learn More</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="/api/placeholder/400/300" alt="Valley of Flowers">
+                    <div class="card-content">
+                        <h3>Valley of Flowers</h3>
+                        <p>UNESCO World Heritage site featuring endemic alpine flowers and diverse flora.</p>
+                        <a href="#" class="btn">Learn More</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="/api/placeholder/400/300" alt="Dehradun">
+                    <div class="card-content">
+                        <h3>Dehradun</h3>
+                        <p>The capital city nestled in the Doon Valley, known for its educational institutions.</p>
+                        <a href="#" class="btn">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="ai-features">
+            <h2 class="section-title">AI-Powered Features</h2>
+            <div class="feature-box">
+                <h3>Personalized Travel Recommendations</h3>
+                <p>Our AI algorithm analyzes your preferences, past travels, and interests to suggest personalized itineraries in Uttarakhand.</p>
+                <div class="dashboard">
+                    <div class="dashboard-card">
+                        <h4>Preference Analysis</h4>
+                        <p>The system uses collaborative filtering to match your preferences with similar travelers.</p>
+                    </div>
+                    <div class="dashboard-card">
+                        <h4>Seasonal Predictions</h4>
+                        <p>Machine learning models predict best times to visit based on weather patterns and crowd data.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="feature-box">
+                <h3>Natural Language Processing for Local Dialects</h3>
+                <p>Our NLP system helps translate and understand local Garhwali and Kumaoni dialects, bridging communication gaps.</p>
+                <div class="dashboard">
+                    <div class="dashboard-card">
+                        <h4>Dialect Translation</h4>
+                        <p>Trained on corpus of regional languages to facilitate communication.</p>
+                    </div>
+                    <div class="dashboard-card">
+                        <h4>Cultural Context</h4>
+                        <p>Understands cultural nuances and context-specific expressions.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="feature-box">
+                <h3>Wildlife Identification</h3>
+                <p>Upload images from your Uttarakhand adventures, and our computer vision system will identify local flora and fauna.</p>
+                <div class="dashboard">
+                    <div class="dashboard-card">
+                        <h4>Species Recognition</h4>
+                        <p>Convolutional neural networks identify hundreds of endemic species.</p>
+                    </div>
+                    <div class="dashboard-card">
+                        <h4>Conservation Status</h4>
+                        <p>Provides information on conservation status and habitat.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="feature-box">
+                <h3>Economic Trend Analysis</h3>
+                <p>Deep learning models analyze economic data to predict employment trends across different sectors in Uttarakhand.</p>
+                <div class="dashboard">
+                    <div class="dashboard-card">
+                        <h4>Job Market Predictions</h4>
+                        <p>Time-series forecasting of employment opportunities by region.</p>
+                    </div>
+                    <div class="dashboard-card">
+                        <h4>Skill Gap Analysis</h4>
+                        <p>Identifies skills in demand based on historical employment data.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="community">
+            <h2 class="section-title">Community Hub</h2>
+            <div class="card-container">
+                <div class="card">
+                    <img src="/api/placeholder/400/300" alt="Share Photos">
+                    <div class="card-content">
+                        <h3>Share Your Photos</h3>
+                        <p>Upload your best shots of Uttarakhand's stunning landscapes and vibrant culture.</p>
+                        <a href="#" class="btn">Upload Photos</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="/api/placeholder/400/300" alt="Share Stories">
+                    <div class="card-content">
+                        <h3>Tell Your Story</h3>
+                        <p>Share your experiences, adventures, and connections to Uttarakhand.</p>
+                        <a href="#" class="btn">Write a Story</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="/api/placeholder/400/300" alt="Review Places">
+                    <div class="card-content">
+                        <h3>Review Places</h3>
+                        <p>Help others by reviewing destinations, accommodations, and experiences.</p>
+                        <a href="#" class="btn">Write a Review</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-container">
+                <div class="tabs">
+                    <button class="tab active">Recent Photos</button>
+                    <button class="tab">Popular Stories</button>
+                    <button class="tab">Top Reviews</button>
+                </div>
+                <div class="tab-content">
+                    <div class="card-container">
+                        <div class="card">
+                            <img src="/api/placeholder/300/200" alt="Community Photo">
+                            <div class="card-content">
+                                <h3>Sunrise at Nanda Devi</h3>
+                                <p>By Anand Sharma</p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <img src="/api/placeholder/300/200" alt="Community Photo">
+                            <div class="card-content">
+                                <h3>Traditional Festival in Chamoli</h3>
+                                <p>By Priya Negi</p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <img src="/api/placeholder/300/200" alt="Community Photo">
+                            <div class="card-content">
+                                <h3>Tranquil Moment at Bhimtal</h3>
+                                <p>By Vikram Bisht</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="diaspora">
+            <h2 class="section-title">Uttarakhand Diaspora</h2>
+            <p>Connect with fellow Uttarakhandis around the world, share experiences, and build networks.</p>
+            
+            <div class="profile-container">
+                <div class="profile-card">
+                    <img src="/api/placeholder/400/300" alt="Diaspora Profile" class="profile-img">
+                    <div class="profile-content">
+                        <h3>Dr. Rajendra Singh</h3>
+                        <p><strong>Location:</strong> Toronto, Canada</p>
+                        <p><strong>Origin:</strong> Dehradun</p>
+                        <p>Computer scientist working on AI applications in healthcare. Organizes annual Uttarakhand cultural festivals in Toronto.</p>
+                        <a href="#" class="btn">Connect</a>
+                    </div>
+                </div>
+                <div class="profile-card">
+                    <img src="/api/placeholder/400/300" alt="Diaspora Profile" class="profile-img">
+                    <div class="profile-content">
+                        <h3>Nandini Rawat</h3>
+                        <p><strong>Location:</strong> London, UK</p>
+                        <p><strong>Origin:</strong> Almora</p>
+                        <p>Entrepreneur who founded a startup promoting Uttarakhand handicrafts internationally. Mentors aspiring entrepreneurs from her home state.</p>
+                        <a href="#" class="btn">Connect</a>
+                    </div>
+                </div>
+                <div class="profile-card">
+                    <img src="/api/placeholder/400/300" alt="Diaspora Profile" class="profile-img">
+                    <div class="profile-content">
+                        <h3>Atul Joshi</h3>
+                        <p><strong>Location:</strong> Sydney, Australia</p>
+                        <p><strong>Origin:</strong> Pauri Garhwal</p>
+                        <p>Environmental scientist working on conservation projects. Runs a scholarship program for students from Uttarakhand villages.</p>
+                        <a href="#" class="btn">Connect</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="feature-box">
+                <h3>Diaspora Networks</h3>
+                <p>Join professional and social networks based on your location, industry, or interests.</p>
+                <a href="#" class="btn">Find Your Network</a>
+            </div>
+            
+            <div class="feature-box">
+                <h3>Homecoming Resources</h3>
+                <p>Planning to return to Uttarakhand? Access resources on relocating, investment opportunities, and reintegration.</p>
+                <a href="#" class="btn">Explore Resources</a>
+            </div>
+        </section>
+        
+        <section id="employment">
+            <h2 class="section-title">Jobs & Education</h2>
+            <div class="card-container">
+                <div class="card">
+                    <div class="card-content">
+                        <h3>Job Opportunities</h3>
+                        <p>Browse employment opportunities across Uttarakhand and for Uttarakhandis worldwide.</p>
+                        <ul>
+                            <li>Tourism & Hospitality</li>
+                            <li>IT & Technology</li>
+                            <li>Education</li>
+                            <li>Agriculture & Forestry</li>
+                            <li>Government Positions</li>
+                        </ul>
+                        <a href="#" class="btn">Browse Jobs</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <h3>Skill Development</h3>
+                        <p>Access training programs and resources tailored to local employment needs.</p>
+                        <ul>
+                            <li>Sustainable Tourism Management</li>
+                            <li>Traditional Craft Modernization</li>
+                            <li>Himalayan Agriculture Techniques</li>
+                            <li>Digital Skills for Mountain Communities</li>
+                        </ul>
+                        <a href="#" class="btn">Find Courses</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <h3>Entrepreneurship</h3>
+                        <p>Resources for starting and growing businesses in Uttarakhand.</p>
+                        <ul>
+                            <li>Funding Opportunities</li>
+                            <li>Mentorship Programs</li>
+                            <li>Government Schemes</li>
+                            <li>Success Stories</li>
+                        </ul>
+                        <a href="#" class="btn">Start Your Journey</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="contribute">
+            <h2 class="section-title">Contribute to Our Database</h2>
+            <p>Help us build a comprehensive repository of information about Uttarakhand by contributing data, stories, and insights.</p>
+            
+            <div class="feature-box">
+                <h3>How Your Data Helps</h3>
+                <p>The information you provide helps us improve our AI models, create better resources, and preserve Uttarakhand's cultural heritage. All data is anonymized and used ethically.</p>
+            </div>
+            
+            <form>
+                <div class="form-group">
+                    <label for="contribution-type">Contribution Type</label>
+                    <select id="contribution-type">
+                        <option value="">Select contribution type</option>
+                        <option value="local-knowledge">Local Knowledge</option>
+                        <option value="historical-information">Historical Information</option>
+                        <option value="dialect-samples">Dialect Samples</option>
+                        <option value="employment-trends">Employment Information</option>
+                        <option value="diaspora-story">Diaspora Experience</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="name">Your Name</label>
+                    <input type="text" id="name" placeholder="Your name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="Your email">
+                </div>
+                
+                <div class="form-group">
+                    <label for="location">Your Location</label>
+                    <input type="text" id="location" placeholder="Current location">
+                </div>
+                
+                <div class="form-group">
+                    <label for="connection">Connection to Uttarakhand</label>
+                    <select id="connection">
+                        <option value="">Select your connection</option>
+                        <option value="resident">Current Resident</option>
+                        <option value="former-resident">Former Resident</option>
+                        <option value="diaspora">Diaspora Member</option>
+                        <option value="visitor">Visitor/Tourist</option>
+                        <option value="researcher">Researcher</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="contribution">Your Contribution</label>
+                    <textarea id="contribution" rows="5" placeholder="Share your knowledge, story, or data here"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="media-upload">Upload Media (Optional)</label>
+                    <input type="file" id="media-upload">
+                </div>
+                
+                <button type="submit" class="btn">Submit Contribution</button>
+            </form>
+        </section>
+    </div>
+    
+    <footer>
+        <p>&copy; 2025 Uttarakhand Information Portal. All information is community-contributed and verified by our team.</p>
+        <p>Contact: info@uttarakhand-portal.org | Privacy Policy | Terms of Service</p>
+    </footer>
+    
+    <script>
+        // Simple tab functionality
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                // In a real implementation, this would show/hide different tab content
+            });
+        });
+        
+        // This would be replaced with actual AI feature code in production
+        console.log("AI features ready to analyze user data and provide personalized experiences");
+    </script>
+</body>
+</html>

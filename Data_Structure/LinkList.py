@@ -18,7 +18,8 @@ class LinkedList:
         new_node=Node(value)
         
         new_node.next=self.head
-        
+        print(new_node.next)
+        print(self.head)
         self.head=new_node
         
         self.n=self.n+1
@@ -132,11 +133,11 @@ class LinkedList:
         
 
 L=LinkedList()
-print(len(L))
 L.insert_head(1)
-L.insert_after(1,2)
-L.insert_tail(3)
-L.insert_tail(4)
-L.insert_tail(5)
-L.reverse()
+L.insert_head(2)
+# L.insert_after(1,2)
+# L.insert_tail(3)
+# L.insert_tail(4)
+# L.insert_tail(5)
+# L.reverse()
 print(L)

@@ -19,7 +19,10 @@ plt.xlabel('Number of clusters')
 plt.ylabel('WCSS')
 plt.show()
 
-model = KMeans(n_clusters = 6, n_init = 10, init = 'k-means++', random_state = 42)
+def optimal_value():
+    return optimal_value
+
+model = KMeans(n_clusters = optimal_value, n_init = 10, init = 'k-means++', random_state = 42)
 y_kmeans = model.fit_predict(X)
 
 

@@ -64,6 +64,18 @@ import pandas as pd
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 # np.random.seed(42)
 # X1 = np.random.normal(50, 10, 100)  # Mean=50, Std=10
 # X2 = np.random.normal(60, 15, 100)  # Mean=60, Std=15
@@ -93,23 +105,23 @@ np.random.seed(42)
 X = np.random.rand(100, 3)  # 100 samples, 3 features
 
 # 1️⃣ Standardize the data
-scaler = StandardScaler()
-X_scaled = scaler.fit_transform(X)
+# scaler = StandardScaler()
+# X_scaled = scaler.fit_transform(X)
 
 # 2️⃣ Apply PCA
-pca = PCA(n_components=2)  # Reduce to 2 principal components
-X_pca = pca.fit_transform(X_scaled)
+# pca = PCA(n_components=2)  # Reduce to 2 principal components
+# X_pca = pca.fit_transform(X_scaled)
 
 # 3️⃣ Explained Variance Ratio (Choosing k)
-explained_variance = pca.explained_variance_ratio_
+# explained_variance = pca.explained_variance_ratio_
 
 # Plot Scree Plot (Elbow Method)
-plt.plot(range(1, len(explained_variance) + 1), np.cumsum(explained_variance), marker='o')
-plt.xlabel('Number of Components')
-plt.ylabel('Cumulative Explained Variance')
-plt.title('PCA Scree Plot')
-plt.show()
+# plt.plot(range(1, len(explained_variance) + 1), np.cumsum(explained_variance), marker='o')
+# plt.xlabel('Number of Components')
+# plt.ylabel('Cumulative Explained Variance')
+# plt.title('PCA Scree Plot')
+# plt.show()
 
-# 4️⃣ Transformed Data
-print("Original Shape:", X.shape)
-print("Reduced Shape:", X_pca.shape)
+# # 4️⃣ Transformed Data
+# print("Original Shape:", X.shape)
+# print("Reduced Shape:", X_pca.shape)

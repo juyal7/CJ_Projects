@@ -30,6 +30,6 @@ df3=pd.read_csv("C:/Users/Chanchal Juyal/Desktop/My Work/Learning Docs/AIML/Clas
 # #statical analysis
 # print(df.describe())
 
-print(df1.duplicated().sum())
-print(df2.duplicated().sum())
-print(df3.duplicated().sum())
+# print(df1.duplicated().sum())
+# print(df2.duplicated().sum())
+# print(df3.duplicated().sum())

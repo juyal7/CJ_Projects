@@ -1,0 +1,13 @@
+#Intro
+ -->classification
+ --> Works with linear data(can't work on concentric type of data)
+ --> Multiple interptation(Probablistic or Geometry)
+
+#Some Basic Geometry
+
+every line has a +ve and -ve side
+
+Ax+By+c>0 +ve
+Ax+By+c<0 -ve
+
+
