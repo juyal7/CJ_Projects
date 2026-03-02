@@ -5,6 +5,7 @@ import torch.nn as nn
 import torchvision.transforms as transforms
 from PIL import Image
 import numpy as np
+import os
 
 # 1. Define the CNN
 class CNN(nn.Module):
@@ -29,11 +30,14 @@ class CNN(nn.Module):
     def forward(self, x):
         return self.classifier(self.features(x))
 
-
+wget https://github.com/your-repo/mnist_cnn.pth -O mnist_cnn.pth
 # 2. Load model + weights
 _device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 _model = CNN().to(_device)
-_model.load_state_dict(torch.load("mnist_cnn.pth", map_location=_device))
+model_path = "mnist_cnn.pth"
+if not os.path.exists(model_path):
+    raise FileNotFoundError(f"Model weights file '{model_path}' not found. Please download or train the model first.")
+_model.load_state_dict(torch.load(model_path, map_location=_device))
 _model.eval()
 
 # 3. Preprocessing pipeline

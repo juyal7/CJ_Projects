@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ग्राम धोनर - समुदायिक वेबसाइट</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .location {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 20px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .nav-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .nav-btn.active {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            transform: translateY(-2px);
+        }
+
+        .section {
+            display: none;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section h2 {
+            color: #2c3e50;
+            font-size: 2em;
+            margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .photo-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .photo-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .photo-placeholder {
+            background: linear-gradient(45deg, #bdc3c7, #95a5a6);
+            height: 200px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            color: #2c3e50;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.2);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .event-card, .donation-card, .place-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid #667eea;
+            transition: transform 0.3s ease;
+        }
+
+        .event-card:hover, .donation-card:hover, .place-card:hover {
+            transform: translateX(5px);
+        }
+
+        .date-badge {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .progress-bar {
+            background: #ecf0f1;
+            border-radius: 10px;
+            height: 20px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+
+        .map-container {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .location-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .info-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .emoji {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            nav {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏔️ स्वागत है ग्राम धोनर में</h1>
+            <p class="location">📍 नयापंचायत क्षेत्र धोनर, पट्टी खतली, धोनर, उत्तराखंड 246276</p>
+            <nav>
+                <button class="nav-btn active" onclick="showSection('photos')">📸 फोटो गैलरी</button>
+                <button class="nav-btn" onclick="showSection('events')">📅 आगामी कार्यक्रम</button>
+                <button class="nav-btn" onclick="showSection('donations')">💝 दान एवं सहयोग</button>
+                <button class="nav-btn" onclick="showSection('geography')">🗺️ भौगोलिक जानकारी</button>
+                <button class="nav-btn" onclick="showSection('tourism')">🏛️ पर्यटन स्थल</button>
+            </nav>
+        </header>
+
+        <!-- Photo Gallery Section -->
+        <div id="photos" class="section active">
+            <h2>📸 फोटो गैलरी</h2>
+            <div class="form-group">
+                <label for="photo-title">फोटो का शीर्षक:</label>
+                <input type="text" id="photo-title" placeholder="फोटो का विवरण लिखें">
+            </div>
+            <div class="form-group">
+                <label for="photo-upload">फोटो अपलोड करें:</label>
+                <input type="file" id="photo-upload" accept="image/*" onchange="addPhoto()">
+            </div>
+            <div class="photo-grid" id="photo-grid">
+                <div class="photo-card">
+                    <div class="photo-placeholder">गांव का मुख्य मार्ग</div>
+                    <h4>धोनर गांव का सुंदर दृश्य</h4>
+                    <p>📅 15 जून, 2025</p>
+                </div>
+                <div class="photo-card">
+                    <div class="photo-placeholder">पारंपरिक घर</div>
+                    <h4>हमारी सांस्कृतिक विरासत</h4>
+                    <p>📅 10 जून, 2025</p>
+                </div>
+                <div class="photo-card">
+                    <div class="photo-placeholder">प्राकृतिक सौंदर्य</div>
+                    <h4>हरे-भरे खेत और पहाड़</h4>
+                    <p>📅 8 जून, 2025</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Events Section -->
+        <div id="events" class="section">
+            <h2>📅 आगामी कार्यक्रम</h2>
+            <div class="form-group">
+                <label for="event-title">कार्यक्रम का नाम:</label>
+                <input type="text" id="event-title" placeholder="कार्यक्रम का नाम लिखें">
+            </div>
+            <div class="form-group">
+                <label for="event-date">दिनांक:</label>
+                <input type="date" id="event-date">
+            </div>
+            <div class="form-group">
+                <label for="event-time">समय:</label>
+                <input type="time" id="event-time">
+            </div>
+            <div class="form-group">
+                <label for="event-description">विवरण:</label>
+                <textarea id="event-description" placeholder="कार्यक्रम का विस्तृत विवरण लिखें"></textarea>
+            </div>
+            <button class="btn" onclick="addEvent()">कार्यक्रम जोड़ें</button>
+            
+            <div id="events-list">
+                <div class="event-card">
+                    <div class="date-badge">20 जून, 2025</div>
+                    <h3>ग्राम सभा की बैठक</h3>
+                    <p><strong>समय:</strong> सुबह 10:00 बजे</p>
+                    <p><strong>स्थान:</strong> गांव का मुख्य चौक</p>
+                    <p>गांव के विकास कार्यों पर चर्चा और नई योजनाओं की जानकारी।</p>
+                </div>
+                <div class="event-card">
+                    <div class="date-badge">25 जून, 2025</div>
+                    <h3>पर्यावरण दिवस समारोह</h3>
+                    <p><strong>समय:</strong> शाम 5:00 बजे</p>
+                    <p><strong>स्थान:</strong> स्कूल का मैदान</p>
+                    <p>पेड़ लगाने का कार्यक्रम और पर्यावरण संरक्षण पर जागरूकता।</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Donations Section -->
+        <div id="donations" class="section">
+            <h2>💝 दान एवं सहयोग</h2>
+            <div class="form-group">
+                <label for="donation-cause">दान का उद्देश्य:</label>
+                <select id="donation-cause">
+                    <option value="">कृपया चुनें</option>
+                    <option value="education">शिक्षा के लिए</option>
+                    <option value="health">स्वास्थ्य सेवा के लिए</option>
+                    <option value="infrastructure">बुनियादी ढांचे के लिए</option>
+                    <option value="temple">मंदिर/धार्मिक स्थल के लिए</option>
+                    <option value="other">अन्य</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="donation-title">शीर्षक:</label>
+                <input type="text" id="donation-title" placeholder="दान अभियान का नाम">
+            </div>
+            <div class="form-group">
+                <label for="donation-target">लक्ष्य राशि (₹):</label>
+                <input type="number" id="donation-target" placeholder="राशि दर्ज करें">
+            </div>
+            <div class="form-group">
+                <label for="donation-description">विवरण:</label>
+                <textarea id="donation-description" placeholder="दान की आवश्यकता का विस्तृत विवरण"></textarea>
+            </div>
+            <button class="btn" onclick="addDonation()">दान अभियान जोड़ें</button>
+
+            <div id="donations-list">
+                <div class="donation-card">
+                    <h3>स्कूल की मरम्मत के लिए</h3>
+                    <p>हमारे गांव के प्राथमिक स्कूल की छत की मरम्मत की जरूरत है।</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 65%"></div>
+                    </div>
+                    <p><strong>एकत्रित:</strong> ₹32,500 / ₹50,000</p>
+                    <button class="btn" style="margin-top: 10px;">दान करें</button>
+                </div>
+                <div class="donation-card">
+                    <h3>सड़क की मरम्मत</h3>
+                    <p>बारिश के कारण मुख्य सड़क में बड़े गड्ढे हो गए हैं।</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 30%"></div>
+                    </div>
+                    <p><strong>एकत्रित:</strong> ₹15,000 / ₹75,000</p>
+                    <button class="btn" style="margin-top: 10px;">दान करें</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Geography Section -->
+        <div id="geography" class="section">
+            <h2>🗺️ भौगोलिक जानकारी</h2>
+            <div class="location-info">
+                <div class="info-card">
+                    <div class="emoji">📍</div>
+                    <h3>स्थिति</h3>
+                    <p><strong>अक्षांश:</strong> 30.0854° N</p>
+                    <p><strong>देशांतर:</strong> 78.2414° E</p>
+                    <p><strong>ऊंचाई:</strong> लगभग 1200 मीटर</p>
+                </div>
+                <div class="info-card">
+                    <div class="emoji">🌡️</div>
+                    <h3>जलवायु</h3>
+                    <p><strong>गर्मी:</strong> 25-35°C</p>
+                    <p><strong>सर्दी:</strong> 5-20°C</p>
+                    <p><strong>वर्षा:</strong> जून-सितंबर</p>
+                </div>
+                <div class="info-card">
+                    <div class="emoji">🏔️</div>
+                    <h3>भूगोल</h3>
+                    <p>पहाड़ी क्षेत्र</p>
+                    <p>हिमालय की तलहटी</p>
+                    <p>वन क्षेत्र से घिरा</p>
+                </div>
+                <div class="info-card">
+                    <div class="emoji">💧</div>
+                    <h3>जल स्रोत</h3>
+                    <p>प्राकृतिक झरने</p>
+                    <p>बोरवेल</p>
+                    <p>वर्षा जल संग्रहण</p>
+                </div>
+            </div>
+            <div class="map-container">
+                <h3>📍 गूगल मैप पर देखें</h3>
+                <p><strong>पूरा पता:</strong> R3J7+99W, Nayapanchayat Chetra Dhonr, Patti Khatli, Dhorn, Uttarakhand 246276</p>
+                <button class="btn" onclick="openMap()">मैप में देखें</button>
+            </div>
+        </div>
+
+        <!-- Tourism Section -->
+        <div id="tourism" class="section">
+            <h2>🏛️ पर्यटन स्थल</h2>
+            <div class="form-group">
+                <label for="place-name">स्थान का नाम:</label>
+                <input type="text" id="place-name" placeholder="पर्यटन स्थल का नाम">
+            </div>
+            <div class="form-group">
+                <label for="place-distance">दूरी (किमी):</label>
+                <input type="number" id="place-distance" placeholder="गांव से दूरी">
+            </div>
+            <div class="form-group">
+                <label for="place-description">विवरण:</label>
+                <textarea id="place-description" placeholder="स्थान का विस्तृत विवरण"></textarea>
+            </div>
+            <button class="btn" onclick="addPlace()">स्थान जोड़ें</button>
+
+            <div id="places-list">
+                <div class="place-card">
+                    <h3>🏔️ केदारनाथ मंदिर</h3>
+                    <p><strong>दूरी:</strong> 45 किमी</p>
+                    <p>प्रसिद्ध शिव मंदिर, चार धाम यात्रा का हिस्सा। यहां हर साल हजारों श्रद्धालु आते हैं।</p>
+                </div>
+                <div class="place-card">
+                    <h3>🌊 चोपता</h3>
+                    <p><strong>दूरी:</strong> 25 किमी</p>
+                    <p>मिनी स्विट्जरलैंड के नाम से प्रसिद्ध। ट्रेकिंग और प्राकृतिक सौंदर्य के लिए मशहूर।</p>
+                </div>
+                <div class="place-card">
+                    <h3>🏞️ तुंगनाथ मंदिर</h3>
+                    <p><strong>दूरी:</strong> 30 किमी</p>
+                    <p>दुनिया का सबसे ऊंचा शिव मंदिर। चंद्रशिला ट्रेक का प्रारंभिक बिंदु।</p>
+                </div>
+                <div class="place-card">
+                    <h3>🌲 देवरिया ताल</h3>
+                    <p><strong>दूरी:</strong> 35 किमी</p>
+                    <p>खूबसूरत झील जहां चौखंबा पर्वत का प्रतिबिंब दिखता है।</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let photoCount = 3;
+        let eventCount = 2;
+        let donationCount = 2;
+        let placeCount = 4;
+
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => section.classList.remove('active'));
+            
+            // Remove active class from all buttons
+            const buttons = document.querySelectorAll('.nav-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+
+        function addPhoto() {
+            const title = document.getElementById('photo-title').value;
+            const fileInput = document.getElementById('photo-upload');
+            
+            if (!title || !fileInput.files.length) {
+                alert('कृपया फोटो का शीर्षक और फोटो दोनों जोड़ें।');
+                return;
+            }
+            
+            const photoGrid = document.getElementById('photo-grid');
+            const photoCard = document.createElement('div');
+            photoCard.className = 'photo-card';
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                photoCard.innerHTML = `
+                    <img src="${e.target.result}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 10px; margin-bottom: 15px;">
+                    <h4>${title}</h4>
+                    <p>📅 ${new Date().toLocaleDateString('hi-IN')}</p>
+                `;
+            };
+            reader.readAsDataURL(fileInput.files[0]);
+            
+            photoGrid.appendChild(photoCard);
+            
+            // Clear form
+            document.getElementById('photo-title').value = '';
+            document.getElementById('photo-upload').value = '';
+            
+            photoCount++;
+        }
+
+        function addEvent() {
+            const title = document.getElementById('event-title').value;
+            const date = document.getElementById('event-date').value;
+            const time = document.getElementById('event-time').value;
+            const description = document.getElementById('event-description').value;
+            
+            if (!title || !date || !time || !description) {
+                alert('कृपया सभी फील्ड भरें।');
+                return;
+            }
+            
+            const eventsList = document.getElementById('events-list');
+            const eventCard = document.createElement('div');
+            eventCard.className = 'event-card';
+            
+            const dateObj = new Date(date);
+            const formattedDate = dateObj.toLocaleDateString('hi-IN');
+            const formattedTime = time;
+            
+            eventCard.innerHTML = `
+                <div class="date-badge">${formattedDate}</div>
+                <h3>${title}</h3>
+                <p><strong>समय:</strong> ${formattedTime}</p>
+                <p><strong>स्थान:</strong> ग्राम धोनर</p>
+                <p>${description}</p>
+            `;
+            
+            eventsList.appendChild(eventCard);
+            
+            // Clear form
+            document.getElementById('event-title').value = '';
+            document.getElementById('event-date').value = '';
+            document.getElementById('event-time').value = '';
+            document.getElementById('event-description').value = '';
+            
+            eventCount++;
+        }
+
+        function addDonation() {
+            const cause = document.getElementById('donation-cause').value;
+            const title = document.getElementById('donation-title').value;
+            const target = document.getElementById('donation-target').value;
+            const description = document.getElementById('donation-description').value;
+            
+            if (!cause || !title || !target || !description) {
+                alert('कृपया सभी फील्ड भरें।');
+                return;
+            }
+            
+            const donationsList = document.getElementById('donations-list');
+            const donationCard = document.createElement('div');
+            donationCard.className = 'donation-card';
+            
+            donationCard.innerHTML = `
+                <h3>${title}</h3>
+                <p>${description}</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 0%"></div>
+                </div>
+                <p><strong>एकत्रित:</strong> ₹0 / ₹${parseInt(target).toLocaleString('hi-IN')}</p>
+                <button class="btn" style="margin-top: 10px;">दान करें</button>
+            `;
+            
+            donationsList.appendChild(donationCard);
+            
+            // Clear form
+            document.getElementById('donation-cause').value = '';
+            document.getElementById('donation-title').value = '';
+            document.getElementById('donation-target').value = '';
+            document.getElementById('donation-description').value = '';
+            
+            donationCount++;
+        }
+
+        function addPlace() {
+            const name = document.getElementById('place-name').value;
+            const distance = document.getElementById('place-distance').value;
+            const description = document.getElementById('place-description').value;
+            
+            if (!name || !distance || !description) {
+                alert('कृपया सभी फील्ड भरें।');
+                return;
+            }
+            
+            const placesList = document.getElementById('places-list');
+            const placeCard = document.createElement('div');
+            placeCard.className = 'place-card';
+            
+            placeCard.innerHTML = `
+                <h3>🏛️ ${name}</h3>
+                <p><strong>दूरी:</strong> ${distance} किमी</p>
+                <p>${description}</p>
+            `;
+            
+            placesList.appendChild(placeCard);
+            
+            // Clear form
+            document.getElementById('place-name').value = '';
+            document.getElementById('place-distance').value = '';
+            document.getElementById('place-description').value = '';
+            
+            placeCount++;
+        }
+
+        function openMap() {
+            const coordinates = "R3J7+99W, Nayapanchayat Chetra Dhonr, Patti Khatli, Dhorn, Uttarakhand 246276, India";
+            const mapUrl = `https://www.google.com/maps/search/${encodeURIComponent(coordinates)}`;
+            window.open(mapUrl, '_blank');
+        }
+
+        // Initialize with photos section active
+        document.addEventListener('DOMContentLoaded', function() {
+            showSection('photos');
+        });
+    </script>
+</body>
+</html>

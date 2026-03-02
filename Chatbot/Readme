@@ -1,0 +1,35 @@
+Core Dependencies:
+
+PyMuPDF - For PDF processing
+python-docx - For Word document processing
+sentence-transformers - For text embeddings
+faiss-cpu - For vector similarity search
+langchain - For LLM integration and chains
+ollama - For Llama 3.2 model integration
+
+Supporting Libraries:
+
+PyTorch ecosystem - For deep learning models
+NumPy/SciPy - For numerical computations
+HuggingFace libraries - For transformer models
+HTTP/API libraries - For web requests and API calls
+Text processing tools - For tokenization and NLP
+
+Installation Instructions:
+
+Save the requirements.txt file in your project directory
+Create a virtual environment (recommended):
+bashpython -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+Install all dependencies:
+bashpip install -r requirements.txt
+
+Install Ollama separately (not available via pip):
+bash# On macOS/Linux
+curl -fsSL https://ollama.ai/install.sh | sh
+
+# On Windows, download from https://ollama.ai/download
+
+Pull the Llama 3.2 model:
+bashollama pull llama3.2
